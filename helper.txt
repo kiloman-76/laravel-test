@@ -1,0 +1,23 @@
+php artisan ide-helper:generate - Генерация PhpDoc документации для Laravel фасадов
+php artisan make:model Models/BlogCategory - Создание модели (флаг -m - создание миграции)
+php artisan make:migration - Создание миграции
+$table->timestamps(); - Создание 2 полей - создание записи, обновление записи
+
+php artisan migrate - Накатить миграции
+php artisan migrate:rollback - Откатить миграцию (--step=5 - откатить 5 миграций)
+php artisan migrate:reset - Откатить все миграции
+php artisan migrate:refresh - Откатить миграции, потом накатить обратно
+(--step=5 - Обновить 5 миграций)
+(--seed - ) - Обновить БД и заполнить стартовыми данными
+
+php artisan db:seed - Наполнение БД стартовыми данными
+
+php artisan route:list - Список маршрутов
+
+$items = BlogPost::all();
+dd($items->first()); - Получить первый элемент
+use SoftDeletes; - Совместно с SoftDeletes в миграциях, добавляеи фильтрацию по deleted_at
+->withTrashed() - Добавить записи с заполненным deleted_at
+?) except в роутах
+
+
