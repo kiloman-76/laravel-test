@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -63,8 +64,30 @@ class CategoryController extends BaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogCategoryUpdateRequest  $request, $id)
     {
+
+//        $rules = [
+//            'title' => 'required|min:5|max:200',
+//            'slug' => 'max:200',
+//            'description' => 'string|min:3|max:500',
+//            'parent_id' => 'required|integer|exists:blog_categories,id'
+//        ];
+
+//        $validatedData = $this->validate($request, $rules);
+
+//        $validatedData = $request->validate($rules);
+
+//        $validator = \Validator::make($request->all(), $rules);
+//        $validatedData[] = $validator->passes(); //Выполнит проверку вернет true/false, можно прикрутить доп. действия
+//        $validatedData[] = $validator->validate(); //Редиректит в случае ошибки
+//        $validatedData[] = $validator->valid(); // Возвращает только правильные поля
+//        $validatedData[] = $validator->failed(); // Возвращает только идентификаторы не прошедших валидацию полей вместе с ошибками
+//        $validatedData[] = $validator->errors(); // Возвращает ошибки
+//        $validatedData[] = $validator->fails(); //возвращает true если валидация провалилась
+
+        dd($validatedData);
+
         $item = BlogCategory::find($id);
         if(empty($item)){
             return back()
