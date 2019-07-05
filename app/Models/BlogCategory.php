@@ -3,7 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BlogCategory extends Model
 {
+    use SoftDeletes;
+
+    protected $fillable // Список полей которые могут быть заполнены методом fill()
+        = [
+        'title',
+        'slug',
+        'parent_id',
+        'description',
+    ];
 }
