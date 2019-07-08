@@ -71,12 +71,21 @@ class CategoryController extends BaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        $item = BlogCategory::findOrFail($id);
-        $categoryList = BlogCategory::all();
+//        $item = BlogCategory::findOrFail($id);
+//        $categoryList = BlogCategory::all();
+// Используем репозитории, чтобы убрать все сложные запросы к моделям из контроллера
 
-        return view('blog.admin.categories.edit', compact('item', 'categoryList'));
+        $item = $categoryRepository->getEdit($id);
+        if(empty($item)) {
+            abort(404);
+        }
+
+        $categoryList = $categoryRepository->getForComboBox();
+
+        return view('blog.admin.categories.edit',
+            compact('item', 'categoryList'));
 
     }
 
