@@ -13,7 +13,7 @@ class BlogCategoryRepository extends CoreRepository
      */
     protected function getModelClass()
     {
-        return Model::class();
+        return Model::class;
     }
 
     /**
@@ -38,7 +38,43 @@ class BlogCategoryRepository extends CoreRepository
 
     public function getForComboBox()
     {
-        return $this->startConditions()->all();
+
+        $columns = implode(', ', [
+            'id',
+            'CONCAT (id, ", ", title) AS id_title'
+        ]);
+
+        $result = $this
+            ->startConditions()
+            ->selectRaw($columns) //Сырой запрос к БД используя SQL-функции
+            ->toBase() // Взять только данные запроса, а не данные всей модели
+            ->get(); // Выполнить запрос
+
+        dd($result);
+
+        return $result;
+    }
+
+
+    /**
+     * Получить все записи с пагинацией
+     *
+     * @param int $perPage
+     *
+     * @return Collection
+     *
+     */
+
+    public function getAllWithPaginate($perPage = null)
+    {
+        $columns = ['id', 'title', 'parent_id'];
+
+        $result = $this
+            ->startConditions()
+            ->select($columns)
+            ->paginate($perPage);
+
+        return $result;
     }
 
 

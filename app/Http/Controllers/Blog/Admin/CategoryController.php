@@ -4,11 +4,32 @@ namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
+use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Управление категориями блога
+ *
+ * @package App\Http\Controllers\Blog\Admin
+ */
 class CategoryController extends BaseController
 {
+
+
+    private $blogCategoryRepository;
+
+    /**
+     * @var BlogCategoryRepository
+     */
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +37,8 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $paginator = BlogCategory::paginate(5);
+//        $paginator = BlogCategory::paginate(5);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(15);
 
         return view('blog.admin.categories.index', compact('paginator'));
     }
@@ -29,7 +51,7 @@ class CategoryController extends BaseController
     public function create()
     {
         $item = new BlogCategory();
-        $categoryList = BlogCategory::all();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item', 'categoryList'));
@@ -48,9 +70,9 @@ class CategoryController extends BaseController
             $data['slug'] = \Str::slug($data['title']);
         }
 
-//        Создаст объект но не добавит в БД
-//        $item = new BlogCategory($data);
-//        $item->save(); // - Добавление в БД, вернет true или false;
+/*       Создаст объект но не добавит в БД
+        $item = new BlogCategory($data);
+        $item->save(); // - Добавление в БД, вернет true или false; */
 
         // Создаст объект и добавит в БД
         $item = (new BlogCategory())->create($data); // Сохранит и вернет объект
@@ -73,9 +95,9 @@ class CategoryController extends BaseController
      */
     public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-//        $item = BlogCategory::findOrFail($id);
-//        $categoryList = BlogCategory::all();
-// Используем репозитории, чтобы убрать все сложные запросы к моделям из контроллера
+/*        $item = BlogCategory::findOrFail($id);
+        $categoryList = BlogCategory::all();
+        Используем репозитории, чтобы убрать все сложные запросы к моделям из контроллера */
 
         $item = $categoryRepository->getEdit($id);
         if(empty($item)) {
@@ -98,7 +120,8 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest  $request, $id)
     {
-        $item = BlogCategory::find($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
+
         if(empty($item)){
             return back()
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
@@ -110,11 +133,10 @@ class CategoryController extends BaseController
 
         $result = $item->update($data);
 
-//      Аналогично коду ниже
-//        $result = $item
-//            ->fill($data)
-//            ->save();
-
+   /*   update() Аналогично коду ниже
+        $result = $item
+            ->fill($data)
+            ->save(); */
 
         if($result){
             return redirect()
