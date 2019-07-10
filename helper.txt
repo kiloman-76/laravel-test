@@ -22,6 +22,9 @@ php artisan make:request BlogCategoryCreateRequest - создать Объект
 php artisan make:controller Namespace\Controller - Создать контроллер
 флаг -r - ресурсный контроллер с базовыми методами
 
+Все команды Artisan можно вызывать с помощью Artisan::call('make:request BlogCategoryCreateRequest')
+
+
 $items = BlogPost::all();
 dd($items->first()); - Получить первый элемент
 use SoftDeletes; - Совместно с SoftDeletes в миграциях, добавляеи фильтрацию по deleted_at
