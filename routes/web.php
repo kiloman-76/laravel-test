@@ -25,10 +25,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['namespace' => 'Blog\Admin', 'prefix' => 'admin/blog'], function(){
+    // BlogCategory
    $methods = ['index', 'edit', 'store', 'update', 'create'];
    Route::resource('categories', 'CategoryController')
        ->only($methods)
        ->names('blog.admin.categories');
+
+   //BlogPost
+    Route::resource('categories', 'CategoryController')
+        ->except(['show'])
+        ->names('blog.admin.posts');
 });
 
 //Route::resource('rest', 'RestTestController')->names('restTest');

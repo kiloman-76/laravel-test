@@ -16,12 +16,11 @@ use App\Http\Controllers\Controller;
 class CategoryController extends BaseController
 {
 
-
-    private $blogCategoryRepository;
-
     /**
      * @var BlogCategoryRepository
      */
+    private $blogCategoryRepository;
+
 
     public function __construct()
     {
