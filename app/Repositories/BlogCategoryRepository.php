@@ -50,8 +50,6 @@ class BlogCategoryRepository extends CoreRepository
             ->toBase() // Взять только данные запроса, а не данные всей модели
             ->get(); // Выполнить запрос
 
-        dd($result);
-
         return $result;
     }
 

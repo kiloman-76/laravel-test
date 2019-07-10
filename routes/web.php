@@ -32,7 +32,7 @@ Route::group(['namespace' => 'Blog\Admin', 'prefix' => 'admin/blog'], function()
        ->names('blog.admin.categories');
 
    //BlogPost
-    Route::resource('categories', 'CategoryController')
+    Route::resource('posts', 'PostController')
         ->except(['show'])
         ->names('blog.admin.posts');
 });

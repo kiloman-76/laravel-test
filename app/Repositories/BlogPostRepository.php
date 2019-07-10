@@ -31,14 +31,24 @@ class BlogPostRepository extends CoreRepository
             'slug',
             'is_published',
             'published_at',
-            'user_id',
-            'category_id',
+            'user_id',      //Если используются связанные модели, то поля,
+            'category_id',  //по которым идет связь, должны идти в запросе
         ];
 
         $result = $this
             ->startConditions()
             ->select($columns)
             ->orderBy('id', 'DESC')
+            /*Заранее собираем все нужные данные одним запросом,
+             чтобы не подгружать связанные данные для каждого элемента циклом */
+            ->with([
+                //Загружать связанные данные можно так
+                'category' => function ($query){
+                    $query->select(['id', 'title']); //Можно добавить дополнительные условия
+                },
+                //Или так
+                'user:id,name' // Оставляем только те поля, которые нам нужны
+            ])
             ->paginate(25);
 
         return $result;
