@@ -4,6 +4,7 @@
     @php
         /** @var \App\Models\BlogCategory $item */
     @endphp
+    @include('blog.admin.posts.includes.result_messages')
     <div class="container">
         @if($item->exists)
             <form method="POST" action="{{ route('blog.admin.posts.update', $item->id) }}">

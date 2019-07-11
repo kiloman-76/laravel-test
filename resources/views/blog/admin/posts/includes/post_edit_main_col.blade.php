@@ -61,8 +61,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="slug">Идентификатор</label>
-                            <input name="slug" value="{{ $item->title }}"
+                            <label for="slug">Идентификатор slug</label>
+                            <input name="slug" value="{{ $item->slug }}"
                                    id="slug"
                                    type="text"
                                    class="form-control">
@@ -82,7 +82,7 @@
                             <input name="is_published"
                                    type="checkbox"
                                    class="form-check-input"
-                                   value="{{ $item->is_published }}"
+                                   value="1"
                                    @if($item->is_published)
                                    checked="checked"
                                    @endif
