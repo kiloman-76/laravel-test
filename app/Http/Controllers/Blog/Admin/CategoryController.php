@@ -129,13 +129,6 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-
-        /* Ушло в обсервер
-        if (empty($data['slug'])) {
-            $data['slug'] = \Str::slug($data['title']);
-        }
-        */
-
         $result = $item->update($data);
 
    /*   update() Аналогично коду ниже

@@ -14,7 +14,12 @@ class BlogPostObserver
      * @param BlogPost $blogPost
      */
 
-    public function creating(BlogPost $blogPost){
+    public function creating(BlogPost $blogPost)
+    {
+        $this->setPublishedAt($blogPost);
+
+        $this->setSlug();
+
 
     }
 
@@ -36,6 +41,11 @@ class BlogPostObserver
         $this->setPublishedAt($blogPost);
 
         $this->setSlug($blogPost);
+
+        $this->setHtml($blogPost);
+
+        $this->setUser($blogPost);
+
     }
 
     /**
