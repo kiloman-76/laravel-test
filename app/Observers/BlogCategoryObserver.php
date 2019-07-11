@@ -6,6 +6,32 @@ use App\Models\BlogCategory;
 
 class BlogCategoryObserver
 {
+
+    /**
+     * Отработка ПЕРЕД созданием категории
+     *
+     * @param BlogCategory $blogCategory
+     */
+    public function creating(BlogCategory $blogCategory)
+    {
+        $this->setSlug($blogCategory);
+    }
+
+    /**
+     * Если поле слаг пустое, то запоняем его конвертацией заголовка.
+     *
+     * @param BlogCategory $blogCategory
+     */
+
+    public function setSlug(BlogCategory $blogCategory)
+    {
+        if(empty($blogCategory->slug)){
+            $blogCategory->slug = \Str::slug($blogCategory->title);
+        }
+    }
+
+
+
     /**
      * Handle the blog category "created" event.
      *
@@ -16,6 +42,18 @@ class BlogCategoryObserver
     {
         //
     }
+
+
+    /**
+     * Отработка ПЕРЕД обновлением категории
+     *
+     * @param BlogCategory $blogCategory
+     */
+    public function updating(BlogCategory $blogCategory)
+    {
+        $this->setSlug($blogCategory);
+    }
+
 
     /**
      * Handle the blog category "updated" event.
